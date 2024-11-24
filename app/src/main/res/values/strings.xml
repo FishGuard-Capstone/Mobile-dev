@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">FishGuard</string>
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
+    <string name="profil">Profil</string>
+    <string name="back">Back</string>
+    <string name="edit">Edit</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="john_doe">John Doe</string>
+    <string name="email_profile">johndoe@gmail.com</string>
+    <string name="arrow">Arrow</string>
+    <string name="pengaturan">Pengaturan</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="save">Selesai</string>
+    <string name="change_photo">Ganti foto profile</string>
+    <string name="first_name">Nama Awal</string>
+    <string name="last_name">Nama Akhir</string>
+    <string name="check">Cek</string>
+    <string name="change_password">Ubah Kata Sandi</string>
+    <string name="onboarding_title_1">Tindakan Kecil, Dampak Besar untuk Lautan.</string>
+    <string name="onboarding_title_2">Jaga Lautan, Selamatkan Masa Depan.</string>
+    <string name="onboarding_title_3">Pantau Lautan, Selamatkan Ekosistem</string>
+    <string name="onboarding_subtitle_1">Tindakan kecil anda merupakan investasi untuk kemajuan ekosistem lautan.</string>
+    <string name="onboarding_subtitle_2">Ajak pengguna untuk berkontribusi menjaga kelestarian laut demi generasi mendatang</string>
+    <string name="onboarding_subtitle_3">Sorot pentingnya pemantauan untuk melindungi ekosistem laut dari ancaman krusakan</string>
+    <string name="start">Mulai</string>
+    <string name="next">Lanjut</string>
+</resources>
