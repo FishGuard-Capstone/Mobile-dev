@@ -25,4 +25,33 @@
     <string name="onboarding_subtitle_3">Sorot pentingnya pemantauan untuk melindungi ekosistem laut dari ancaman krusakan</string>
     <string name="start">Mulai</string>
     <string name="next">Lanjut</string>
+
+    <!-- Login -->
+    <string name="masuk">MASUK</string>
+    <string name="masuk_subtitle">Silahkan masuk untuk menjelajahi dunia</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="tidak_punya_akun">Tidak punya akun? <u>Daftar sekarang</u></string>
+    <string name="login_google">Masuk dengan Google</string>
+    <string name="masuk_button">Masuk</string>
+
+    <!-- Register -->
+    <string name="daftar">DAFTAR</string>
+    <string name="daftar_subtitle">Silahkan isi untuk membuat akun</string>
+    <string name="name">Nama Lengkap</string>
+    <string name="sudah_punya_akun">Sudah punya akun? <u>Masuk</u></string>
+    <string name="daftar_button">Daftar</string>
+
+    <!-- General -->
+    <string name="back_button">Kembali</string>
+    <string name="masuk_login">MASUK</string>
+    <string name="text_login">Silahkan masuk untuk menjelajahi dunia</string>
+    <string name="hint_email">\@gmail.com</string>
+    <string name="hint_password">**********</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="email_daftar">Email</string>
+    <string name="kata_sandi_daftar">Kata Sandi</string>
+    <string name="sudah_punya_akun_masuk">Sudah punya akun? Masuk</string>
+    <string name="atau_masuk_dengan">Atau masuk dengan</string>
+    <string name="login_dengan_google">Login dengan Google</string>
 </resources>

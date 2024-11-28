@@ -1,5 +1,6 @@
 package com.capstone.fishguard
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -33,33 +34,33 @@ class OnboardingActivity : AppCompatActivity() {
             getString(R.string.onboarding_subtitle_3)
         )
 
-
         val imageView: ImageView = findViewById(R.id.imageView)
         val titleView: TextView = findViewById(R.id.titleText)
         val subtitleView: TextView = findViewById(R.id.subtitleText)
         val button: Button = findViewById(R.id.actionButton)
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
 
-
+        // Menambahkan tab untuk setiap halaman onboarding
         repeat(titles.size) {
             tabLayout.addTab(tabLayout.newTab())
         }
 
-
+        // Memperbarui konten tampilan onboarding
         updateContent(imageView, titleView, subtitleView, button, tabLayout)
-
 
         button.setOnClickListener {
             pageIndex++
             if (pageIndex < titles.size) {
+                // Jika halaman masih ada, perbarui tampilan untuk halaman selanjutnya
                 updateContent(imageView, titleView, subtitleView, button, tabLayout)
             } else {
-                pageIndex = 0
-                updateContent(imageView, titleView, subtitleView, button, tabLayout)
+                // Jika sudah di halaman terakhir, navigasikan ke halaman login
+                navigateToLogin()
             }
         }
     }
 
+    // Fungsi untuk memperbarui konten tampilan berdasarkan halaman yang aktif
     private fun updateContent(
         imageView: ImageView,
         titleView: TextView,
@@ -72,11 +73,19 @@ class OnboardingActivity : AppCompatActivity() {
         subtitleView.text = subtitles[pageIndex]
 
         button.text = when (pageIndex) {
-            0 -> getString(R.string.start)
-            else -> getString(R.string.next)
+            0 -> getString(R.string.start) // Tombol di halaman pertama
+            else -> getString(R.string.next) // Tombol di halaman selain pertama
         }
 
-
+        // Memilih tab yang sesuai dengan halaman yang aktif
         tabLayout.selectTab(tabLayout.getTabAt(pageIndex))
+    }
+
+    // Fungsi untuk menavigasi ke halaman login setelah onboarding selesai
+    private fun navigateToLogin() {
+        // Membuat intent untuk berpindah ke LoginActivity
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()  // Menutup OnboardingActivity agar tidak bisa kembali
     }
 }

@@ -39,19 +39,30 @@ android {
 }
 
 dependencies {
-
+    // AndroidX and Material
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
+
+    // Lifecycle & Navigation
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
+    // Legacy Support
     implementation(libs.androidx.legacy.support.v4)
+
+    // Fragment and Activity KTX
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.activity)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Google Material
+    implementation(libs.material)
 }
