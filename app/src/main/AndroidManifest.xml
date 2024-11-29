@@ -27,8 +27,8 @@
             android:exported="false"
             android:theme="@style/Theme.FishGuard.NoActionBar" />
 
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ui.account.LoginActivity" />
+        <activity android:name=".ui.account.RegisterActivity" />
 
         <activity
             android:name=".MainActivity"

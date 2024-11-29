@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.capstone.fishguard.ui.account.LoginActivity
 import com.google.android.material.tabs.TabLayout
 
 class OnboardingActivity : AppCompatActivity() {

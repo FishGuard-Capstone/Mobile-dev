@@ -1,9 +1,11 @@
-package com.capstone.fishguard
+package com.capstone.fishguard.ui.account
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.capstone.fishguard.MainActivity
+import com.capstone.fishguard.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
