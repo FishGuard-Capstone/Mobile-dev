@@ -54,4 +54,13 @@
     <string name="sudah_punya_akun_masuk">Sudah punya akun? Masuk</string>
     <string name="atau_masuk_dengan">Atau masuk dengan</string>
     <string name="login_dengan_google">Login dengan Google</string>
+    <string name="lindungi">Lindungi</string>
+    <string name="indahnya_laut">Indahnya Laut!</string>
+    <string name="layanan_kami">Layanan kami</string>
+    <string name="lihat_semua">Lihat semua</string>
+    <string name="identifikasi_ikan">Identifikasi Ikan</string>
+    <string name="berita_kelautan">Berita Kelautan</string>
+    <string name="komunitas_perikanan">Komunitas Perikanan</string>
+    <string name="coming_soon">Coming Soon</string>
+    <string name="header_image_desc">header</string>
 </resources>

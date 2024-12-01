@@ -1,37 +1,58 @@
 package com.capstone.fishguard.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.capstone.fishguard.databinding.FragmentHomeBinding
+import com.capstone.fishguard.ui.identifikasi.IdentifikasiIkanActivity
+import com.capstone.fishguard.ui.berita.BeritaKelautanActivity
+import com.capstone.fishguard.ui.komunitas.KomunitasPerikananActivity
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        // Observe data from ViewModel if needed
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            if (message != null) {
+                android.widget.Toast.makeText(requireContext(), message, android.widget.Toast.LENGTH_SHORT).show()
+            }
         }
+
+        // Set click listeners for each card
+        binding.cardIdentifikasiIkan.setOnClickListener {
+            val intent = Intent(requireContext(), IdentifikasiIkanActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cardBeritaKelautan.setOnClickListener {
+            val intent = Intent(requireContext(), BeritaKelautanActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cardKomunitasPerikanan.setOnClickListener {
+            val intent = Intent(requireContext(), KomunitasPerikananActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cardComingSoon.setOnClickListener {
+            viewModel.showComingSoonMessage()
+        }
+
         return root
     }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "397932948701",
+    "project_id": "fishguard-acb35",
+    "storage_bucket": "fishguard-acb35.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397932948701:android:f01f860e21bcf947ae7f34",
+        "android_client_info": {
+          "package_name": "com.capstone.fishguard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTQ2Lt8BYAolb5XjDEh5HYNU_ogRbRdig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

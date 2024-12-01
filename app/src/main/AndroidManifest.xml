@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -13,25 +14,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FishGuard"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ui.komunitas.KomunitasPerikananActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.identifikasi.IdentifikasiIkanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.berita.BeritaKelautanActivity"
+            android:exported="false" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.FishGuard.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".OnboardingActivity"
             android:exported="false"
             android:theme="@style/Theme.FishGuard.NoActionBar" />
-
         <activity android:name=".ui.account.LoginActivity" />
         <activity android:name=".ui.account.RegisterActivity" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
