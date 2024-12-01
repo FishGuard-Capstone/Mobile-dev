@@ -99,6 +99,7 @@
                     android:layout_weight="1"
                     android:text="@string/layanan_kami"
                     android:textSize="18sp"
+                    android:textColor="?attr/colorOnSecondary"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -111,12 +112,10 @@
                     android:padding="8dp"/>
             </LinearLayout>
 
-            <!-- Service Cards Grid -->
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:rowCount="2"
                 android:padding="8dp">
 
                 <!-- Identifikasi Ikan Card -->
@@ -126,32 +125,34 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_columnWeight="1"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="12dp"
+                    android:backgroundTint="?attr/colorSurface"
                     android:foreground="?attr/selectableItemBackground">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="16dp">
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="140dp"
                             android:src="@drawable/pic_identifikasi"
                             android:scaleType="centerCrop"
-                            android:contentDescription="@string/identifikasi_ikan" />
+                            android:contentDescription="@string/identifikasi_ikan"
+                            android:background="@drawable/rounded_image_home_menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="16dp"
                             android:text="@string/identifikasi_ikan"
                             android:textStyle="bold"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="14sp" />
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -162,32 +163,34 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_columnWeight="1"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="12dp"
+                    android:backgroundTint="?attr/colorSurface"
                     android:foreground="?attr/selectableItemBackground">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="16dp">
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="140dp"
                             android:src="@drawable/pic_berita"
                             android:scaleType="centerCrop"
-                            android:contentDescription="@string/berita_kelautan" />
+                            android:contentDescription="@string/berita_kelautan"
+                            android:background="@drawable/rounded_image_home_menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="16dp"
                             android:text="@string/berita_kelautan"
                             android:textStyle="bold"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="14sp" />
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -198,33 +201,38 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_columnWeight="1"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="12dp"
+                    android:backgroundTint="?attr/colorSurface"
                     android:foreground="?attr/selectableItemBackground">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="16dp">
 
+                        <!-- Gambar -->
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:src="@drawable/pic_perikanan"
+                            android:layout_height="140dp"
                             android:scaleType="centerCrop"
-                            android:contentDescription="@string/komunitas_perikanan" />
+                            android:src="@drawable/pic_perikanan"
+                            android:contentDescription="@string/komunitas_perikanan"
+                            android:background="@drawable/rounded_image_home_menu" />
 
+                        <!-- Teks -->
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="16dp"
                             android:text="@string/komunitas_perikanan"
                             android:textStyle="bold"
-                            android:textColor="?attr/colorOnBackground"
-                            android:textSize="14sp" />
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="16sp"
+                            android:gravity="center" />
                     </LinearLayout>
+
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Coming Soon Card -->
@@ -234,35 +242,38 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_columnWeight="1"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="8dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="12dp"
+                    android:backgroundTint="?attr/colorSurface"
                     android:foreground="?attr/selectableItemBackground">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="16dp">
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
+                            android:layout_height="140dp"
                             android:src="@drawable/ic_coming_soon"
                             android:scaleType="centerCrop"
-                            android:contentDescription="@string/coming_soon" />
+                            android:contentDescription="@string/coming_soon"
+                            android:background="@drawable/rounded_image_home_menu" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="16dp"
                             android:text="@string/coming_soon"
                             android:textStyle="bold"
-                            android:textColor="?attr/colorOnBackground"
+                            android:textColor="?attr/colorOnSecondary"
                             android:textSize="16sp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </GridLayout>
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

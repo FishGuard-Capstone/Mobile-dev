@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.capstone.fishguard.databinding.FragmentHomeBinding
 import com.capstone.fishguard.ui.identifikasi.IdentifikasiIkanActivity
-import com.capstone.fishguard.ui.berita.BeritaKelautanActivity
+import com.capstone.fishguard.ui.newsapi.BeritaKelautanActivity
 import com.capstone.fishguard.ui.komunitas.KomunitasPerikananActivity
 
 class HomeFragment : Fragment() {

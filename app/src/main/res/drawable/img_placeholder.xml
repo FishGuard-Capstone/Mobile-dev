@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Background -->
+    <path
+        android:fillColor="#F5F5F5"
+        android:pathData="M0,0h120v120h-120z"/>
+
+    <!-- Outer Circle -->
+    <path
+        android:fillColor="#EEEEEE"
+        android:strokeColor="#E0E0E0"
+        android:strokeWidth="2"
+        android:pathData="M60,60m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"/>
+
+    <!-- Camera Body -->
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M45,45h30v25h-30z"/>
+
+    <!-- Camera Lens -->
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M55,52.5a5,5 0,1 1,10 0a5,5 0,1 1,-10 0"/>
+
+    <!-- Flash -->
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M70,48h4v4h-4z"/>
+
+    <!-- Camera Top -->
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M48,42h24v3h-24z"/>
+
+    <!-- Decorative Lines -->
+    <path
+        android:strokeColor="#E0E0E0"
+        android:strokeWidth="1"
+        android:strokeLineCap="round"
+        android:pathData="M10,10L110,110"/>
+
+    <path
+        android:strokeColor="#E0E0E0"
+        android:strokeWidth="1"
+        android:strokeLineCap="round"
+        android:pathData="M110,10L10,110"/>
+
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M15,15m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M105,15m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M15,105m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M105,105m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+</vector>

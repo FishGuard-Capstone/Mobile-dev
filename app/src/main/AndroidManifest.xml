@@ -21,7 +21,7 @@
             android:name=".ui.identifikasi.IdentifikasiIkanActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.berita.BeritaKelautanActivity"
+            android:name=".ui.newsapi.BeritaKelautanActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
