@@ -46,7 +46,7 @@
     <string name="back_button">Kembali</string>
     <string name="masuk_login">MASUK</string>
     <string name="text_login">Silahkan masuk untuk menjelajahi dunia</string>
-    <string name="hint_email">\@gmail.com</string>
+    <string name="hint_email">example@example.com</string>
     <string name="hint_password">**********</string>
     <string name="nama_lengkap">Nama Lengkap</string>
     <string name="email_daftar">Email</string>
@@ -63,4 +63,13 @@
     <string name="komunitas_perikanan">Komunitas\nPerikanan</string>
     <string name="coming_soon">Coming Soon</string>
     <string name="header_image_desc">header</string>
+
+    <string name="error_email_empty">Email tidak boleh kosong</string>
+    <string name="error_invalid_email">Email tidak valid</string>
+    <string name="error_password_empty">Password tidak boleh kosong</string>
+    <string name="error_password_too_short">Password minimal 6 karakter</string>
+
+    <string name="error_name_empty">Nama tidak boleh kosong</string>
+    <string name="error_name_too_short">Nama minimal 3 karakter</string>
+    <string name="error_password_complexity">Password harus berisi huruf dan angka</string>
 </resources>
