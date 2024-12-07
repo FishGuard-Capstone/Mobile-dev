@@ -74,6 +74,7 @@ dependencies {
 
     // Image Cropping
     implementation(libs.ucrop)
+    implementation(libs.androidx.activity)
 
     // Room Database
     val roomVersion = "2.6.1"
