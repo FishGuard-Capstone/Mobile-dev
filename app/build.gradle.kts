@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp") version "1.9.22-1.0.16"
 }
 
 android {
@@ -39,6 +40,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        mlModelBinding = true
     }
 }
 
@@ -49,37 +51,51 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
 
-    // Lifecycle & Navigation
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
+    // TensorFlow Lite
+    implementation(libs.tensorflow.lite)
+    implementation(libs.tensorflow.lite.support.v044)
+    implementation(libs.tensorflow.lite.metadata.v044)
+    implementation(libs.tensorflow.lite.task.vision)
 
-    // Legacy Support
-    implementation(libs.androidx.legacy.support.v4)
+    // JSON Parsing
+    implementation(libs.gson)
 
-    // Fragment and Activity KTX
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.activity)
-
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
-    // Google Material
-    implementation(libs.material)
-
-    // Google auth
-
+    // Image Loading Libraries
     implementation(libs.glide)
+    implementation(libs.picasso)
 
+    // Retrofit for Networking
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
+    // OkHttp for Networking
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
+    // Image Cropping
+    implementation(libs.ucrop)
 
-    implementation(libs.picasso)
+    // Room Database
+    val roomVersion = "2.6.1"
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // Lifecycle components
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // Fragment and Activity KTX
+    implementation(libs.androidx.fragment.ktx.v193)
+    implementation(libs.androidx.activity.ktx)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Testing Libraries
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
+
