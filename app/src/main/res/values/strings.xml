@@ -72,4 +72,7 @@
     <string name="error_name_empty">Nama tidak boleh kosong</string>
     <string name="error_name_too_short">Nama minimal 3 karakter</string>
     <string name="error_password_complexity">Password harus berisi huruf dan angka</string>
+    <string name="history">Riwayat</string>
+    <string name="analyze">Analisis</string>
+    <string name="gallery">Ambil dari galeri</string>
 </resources>
