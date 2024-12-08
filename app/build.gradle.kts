@@ -75,9 +75,10 @@ dependencies {
     // Image Cropping
     implementation(libs.ucrop)
     implementation(libs.androidx.activity)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
 
     // Room Database
-    val roomVersion = "2.6.1"
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
@@ -88,8 +89,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // Fragment and Activity KTX
-    implementation(libs.androidx.fragment.ktx.v193)
-    implementation(libs.androidx.activity.ktx)
+    val fragment_version = "1.8.5"
+    implementation("androidx.fragment:fragment:$fragment_version")
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+    implementation("androidx.fragment:fragment-compose:$fragment_version")
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
@@ -99,4 +102,3 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
-
