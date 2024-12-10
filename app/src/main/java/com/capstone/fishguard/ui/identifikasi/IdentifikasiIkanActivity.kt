@@ -12,7 +12,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.capstone.fishguard.databinding.ActivityIdentifikasiIkanBinding
 import com.capstone.fishguard.helper.ImageClassifierHelper
 import com.yalantis.ucrop.UCrop
-import org.tensorflow.lite.task.vision.classifier.Classifications
 import java.io.File
 
 class IdentifikasiIkanActivity : AppCompatActivity(), ImageClassifierHelper.ClassifierListener {
@@ -82,11 +81,16 @@ class IdentifikasiIkanActivity : AppCompatActivity(), ImageClassifierHelper.Clas
         }
     }
 
-    private fun navigateToResult(prediction: String, confidence: Int) {
+    private fun navigateToResult(
+        prediction: String,
+        status: String,
+        confidence: Int
+    ) {
         selectedImageUri?.let {
             val resultIntent = Intent(this, ResultActivity::class.java).apply {
                 putExtra("IMAGE_URI", it.toString())
                 putExtra("PREDICTION", prediction)
+                putExtra("STATUS", status)
                 putExtra("CONFIDENCE_SCORE", confidence)
             }
             startActivity(resultIntent)
@@ -98,12 +102,8 @@ class IdentifikasiIkanActivity : AppCompatActivity(), ImageClassifierHelper.Clas
         viewBinding.progressIndicator.visibility = View.GONE
     }
 
-    override fun onResults(results: List<Classifications>?) {
-        results?.get(0)?.categories?.maxByOrNull { it.score }?.let { category ->
-            val predictionLabel = category.label
-            val confidenceScore = (category.score * 100).toInt()
-            navigateToResult(predictionLabel, confidenceScore)
-        }
+    override fun onResults(result: ImageClassifierHelper.ClassificationResult) {
+        navigateToResult(result.label, result.status, result.confidence)
         viewBinding.progressIndicator.visibility = View.GONE
     }
 

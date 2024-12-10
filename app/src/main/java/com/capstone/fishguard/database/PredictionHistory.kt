@@ -9,5 +9,6 @@ data class PredictionHistory(
     val id: Long = 0L,
     val imageUri: String,
     val prediction: String,
+    val status: String,
     val confidenceScore: Int
 )

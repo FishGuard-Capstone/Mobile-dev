@@ -16,4 +16,7 @@ interface PredictionHistoryDao {
 
     @Delete
     suspend fun delete(prediction: PredictionHistory)
+
+    @Delete
+    suspend fun deleteAll(items: List<PredictionHistory>)
 }

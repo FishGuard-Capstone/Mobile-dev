@@ -6,84 +6,126 @@ import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import android.os.Build.VERSION
 import android.provider.MediaStore
 import android.util.Log
+import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.DataType
-import org.tensorflow.lite.support.common.ops.CastOp
+import org.tensorflow.lite.support.common.FileUtil
+import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
-import org.tensorflow.lite.task.core.BaseOptions
-import org.tensorflow.lite.task.vision.classifier.Classifications
-import org.tensorflow.lite.task.vision.classifier.ImageClassifier
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.io.IOException
 
 class ImageClassifierHelper(
-    var threshold: Float = 0.1f,
-    var maxResults: Int = 3,
-    val modelName: String = "fishguardfinal.tflite",
-    val context: Context,
-    val classifierListener: ClassifierListener?
+    private val context: Context,
+    private val classifierListener: ClassifierListener?
 ) {
-    private var imageClassifier: ImageClassifier? = null
+    private lateinit var interpreter: Interpreter
+    private lateinit var imageProcessor: ImageProcessor
+    private lateinit var inputImageBuffer: TensorImage
+    private lateinit var outputProbabilityBuffer: TensorBuffer
+
+    private val labels = listOf(
+        "Ikan Balashark",
+        "Ikan Raja Laut",
+        "Ikan Belida",
+        "Ikan Pari Sungai",
+        "Ikan Pari Gergaji",
+        "Ikan Lain"
+    )
+
+    // Threshold confidence untuk menentukan apakah gambar termasuk ikan dilindungi
+    private val confidenceThreshold = 0.5f
 
     init {
-        setupImageClassifier()
+        setupTFLiteInterpreter()
     }
 
-    private fun setupImageClassifier() {
-        val optionsBuilder = ImageClassifier.ImageClassifierOptions.builder()
-            .setScoreThreshold(threshold)
-            .setMaxResults(maxResults)
-        val baseOptionsBuilder = BaseOptions.builder()
-            .setNumThreads(4)
-        optionsBuilder.setBaseOptions(baseOptionsBuilder.build())
-
+    private fun setupTFLiteInterpreter() {
         try {
-            imageClassifier = ImageClassifier.createFromFileAndOptions(
-                context,
-                modelName,
-                optionsBuilder.build()
-            )
-        } catch (e: IllegalStateException) {
-            classifierListener?.onError("Failed to initialize the image classifier")
-            Log.e(TAG, e.message.toString())
+            val tfliteModel = FileUtil.loadMappedFile(context, "fishguardfinal.tflite")
+            interpreter = Interpreter(tfliteModel)
+
+            // Siapkan processor gambar untuk pra-pemrosesan
+            imageProcessor = ImageProcessor.Builder()
+                .add(ResizeOp(150, 150, ResizeOp.ResizeMethod.NEAREST_NEIGHBOR))
+                .add(NormalizeOp(0f, 255f))
+                .build()
+
+            // Inisialisasi buffer input dan output
+            inputImageBuffer = TensorImage(DataType.FLOAT32)
+            outputProbabilityBuffer = TensorBuffer.createFixedSize(intArrayOf(1, labels.size), DataType.FLOAT32)
+
+        } catch (e: IOException) {
+            classifierListener?.onError("Gagal memuat model: ${e.message}")
+            Log.e(TAG, "Kesalahan pemuatan model", e)
         }
     }
 
-    @SuppressLint("ObsoleteSdkInt")
+    @SuppressLint("UnsafeOptInUsageError")
     fun classifyStaticImage(imageUri: Uri) {
         try {
-            if (imageClassifier == null) {
-                setupImageClassifier()
-            }
-
-            val imageProcessor = ImageProcessor.Builder()
-                .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.NEAREST_NEIGHBOR))
-                .add(CastOp(DataType.FLOAT32)) // Convert to FLOAT32
-                .build()
-
-            val bitmap = if (VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            // Dekode bitmap
+            val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 val source = ImageDecoder.createSource(context.contentResolver, imageUri)
                 ImageDecoder.decodeBitmap(source)
             } else {
                 MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
             }?.copy(Bitmap.Config.ARGB_8888, true)
 
-            bitmap?.let {
-                val tensorImage = imageProcessor.process(TensorImage.fromBitmap(it))
+            bitmap?.let { image ->
+                // Pra-pemrosesan gambar
+                inputImageBuffer.load(image)
+                val processedImage = imageProcessor.process(inputImageBuffer)
 
-                val results = imageClassifier?.classify(tensorImage)
-                classifierListener?.onResults(results)
-            }
+                // Jalankan inferensi
+                interpreter.run(processedImage.buffer, outputProbabilityBuffer.buffer)
+
+                // Proses hasil
+                val probabilities = outputProbabilityBuffer.floatArray
+                val maxIndex = probabilities.indices.maxBy { probabilities[it] }
+                val maxProbability = probabilities[maxIndex]
+                val label = labels[maxIndex]
+
+                // Daftar ikan yang dilindungi dengan indeks mereka
+                val protectedFishIndices = listOf(0, 1, 2, 3, 4)
+
+                val (finalLabel, finalStatus, confidence) = when {
+                    // Jika probabilitas tertinggi rendah atau bukan ikan yang dikenali
+                    maxProbability < confidenceThreshold || label == "Ikan Lain" -> {
+                        Triple("Ikan Lain", "Tidak Dilindungi", 0)
+                    }
+                    // Jika ikan termasuk dalam daftar ikan dilindungi
+                    maxIndex in protectedFishIndices -> {
+                        Triple(label, "Dilindungi", (maxProbability * 100).toInt())
+                    }
+                    // Untuk kasus lainnya (seharusnya tidak terjadi)
+                    else -> {
+                        Triple("Ikan Lain", "Tidak Dilindungi", 0)
+                    }
+                }
+
+                classifierListener?.onResults(
+                    ClassificationResult(finalLabel, finalStatus, confidence)
+                )
+            } ?: classifierListener?.onError("Gagal memuat gambar")
+
         } catch (e: Exception) {
-            classifierListener?.onError(e.message ?: "An error occurred while classifying the image")
+            classifierListener?.onError(e.message ?: "Kesalahan saat mengklasifikasi gambar")
         }
     }
 
+    data class ClassificationResult(
+        val label: String,
+        val status: String,
+        val confidence: Int
+    )
+
     interface ClassifierListener {
         fun onError(error: String)
-        fun onResults(results: List<Classifications>?)
+        fun onResults(result: ClassificationResult)
     }
 
     companion object {

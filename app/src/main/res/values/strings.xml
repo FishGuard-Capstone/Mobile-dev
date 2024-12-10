@@ -76,4 +76,8 @@
     <string name="analyze">Analisis</string>
     <string name="gallery">Ambil dari galeri</string>
     <string name="result">Hasil Analisis</string>
+    <string name="simpan_hasil">Simpan Hasil</string>
+    <string name="tingkat_kepercayaan_0">Tingkat Kepercayaan: 0%</string>
+    <string name="nama_ikan">Nama Ikan</string>
+    <string name="status_ikan">"Status Ikan: "</string>
 </resources>
