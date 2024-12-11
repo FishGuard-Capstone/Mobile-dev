@@ -31,7 +31,7 @@ class PredictionHistoryAdapter(private val historyItems: List<PredictionHistory>
             binding.apply {
                 imageView.setImageURI(Uri.parse(history.imageUri))
                 predictionTextView.text = history.prediction
-                confidenceScoreTextView.text = "${history.confidenceScore}%"
+                statusTextView.text = history.status
             }
         }
     }

@@ -2,6 +2,7 @@ package com.capstone.fishguard.ui.identifikasi
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -18,8 +19,8 @@ import kotlinx.coroutines.withContext
 class ResultActivity : AppCompatActivity() {
     private lateinit var resultImage: ImageView
     private lateinit var resultName: TextView
-    private lateinit var resultConfidence: TextView
     private lateinit var resultStatus: TextView
+    private lateinit var resultDescription: TextView
     private lateinit var saveButton: MaterialButton
 
     private var isPredictionSaved = false
@@ -31,15 +32,14 @@ class ResultActivity : AppCompatActivity() {
         // Initialize views
         resultImage = findViewById(R.id.result_image)
         resultName = findViewById(R.id.result_name)
-        resultConfidence = findViewById(R.id.result_confidence)
         resultStatus = findViewById(R.id.result_status)
+        resultDescription = findViewById(R.id.result_description)
         saveButton = findViewById(R.id.saveButton)
 
         // Get data from Intent with null checks
         val imageUri = intent.getStringExtra("IMAGE_URI")
         val prediction = intent.getStringExtra("PREDICTION") ?: "Tidak Dikenali"
         val status = intent.getStringExtra("STATUS") ?: "Tidak Tersedia"
-        val confidenceScore = intent.getIntExtra("CONFIDENCE_SCORE", 0)
 
         // Display data on layout
         imageUri?.let {
@@ -47,27 +47,38 @@ class ResultActivity : AppCompatActivity() {
                 resultImage.setImageURI(Uri.parse(it))
             } catch (e: Exception) {
                 showToast("Gagal memuat gambar")
+                Log.e("ResultActivity", "Error loading image", e)
             }
         }
 
-        // Set text with improved formatting
+        // Set text with additional description
         resultName.text = "Jenis Ikan: $prediction"
         resultStatus.text = "Status: $status"
-        resultConfidence.text = "Tingkat Kepercayaan: $confidenceScore%"
+
+        // Add description based on fish type
+        val description = when (prediction) {
+            "Ikan Balashark" -> getString(R.string.desc_balashark)
+            "Ikan Belida" -> getString(R.string.desc_belida)
+            "Ikan Lain" -> getString(R.string.desc_lain)
+            "Ikan Pari Gergaji" -> getString(R.string.desc_pari_gergaji)
+            "Ikan Pari Sungai" -> getString(R.string.desc_pari_sungai)
+            "Ikan Raja Laut" -> getString(R.string.desc_raja_laut)
+            else -> "Informasi tambahan tidak tersedia"
+        }
+        resultDescription.text = description
 
         // Configure save button
-        setupSaveButton(imageUri, prediction, status, confidenceScore)
+        setupSaveButton(imageUri, prediction, status)
     }
 
     private fun setupSaveButton(
         imageUri: String?,
         prediction: String,
-        status: String,
-        confidenceScore: Int
+        status: String
     ) {
         saveButton.setOnClickListener {
             if (!isPredictionSaved) {
-                storePredictionInHistory(imageUri, prediction, status, confidenceScore)
+                storePredictionInHistory(imageUri, prediction, status)
             } else {
                 showToast("Prediksi sudah disimpan")
             }
@@ -77,8 +88,7 @@ class ResultActivity : AppCompatActivity() {
     private fun storePredictionInHistory(
         imageUri: String?,
         prediction: String,
-        status: String,
-        confidenceScore: Int
+        status: String
     ) {
         // Validasi input
         if (imageUri.isNullOrEmpty()) {
@@ -89,14 +99,16 @@ class ResultActivity : AppCompatActivity() {
         val predictionHistory = PredictionHistory(
             imageUri = imageUri,
             prediction = prediction,
-            status = status,
-            confidenceScore = confidenceScore
+            status = status
         )
 
         val db = PredictionHistoryDatabase.getDatabase(this)
         lifecycleScope.launch {
             try {
                 withContext(Dispatchers.IO) {
+                    // Logging before insertion
+                    Log.d("ResultActivity", "Attempting to insert: $predictionHistory")
+
                     // Save new prediction
                     db.predictionHistoryDao().insert(predictionHistory)
 
@@ -117,6 +129,7 @@ class ResultActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    Log.e("ResultActivity", "Error saving prediction", e)
                     showToast("Gagal menyimpan: ${e.localizedMessage}")
                 }
             }
@@ -125,12 +138,5 @@ class ResultActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        const val IMAGE_URI_KEY = "IMAGE_URI"
-        const val PREDICTION_KEY = "PREDICTION"
-        const val STATUS_KEY = "STATUS"
-        const val CONFIDENCE_SCORE_KEY = "CONFIDENCE_SCORE"
     }
 }

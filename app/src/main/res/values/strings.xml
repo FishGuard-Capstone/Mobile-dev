@@ -80,4 +80,17 @@
     <string name="tingkat_kepercayaan_0">Tingkat Kepercayaan: 0%</string>
     <string name="nama_ikan">Nama Ikan</string>
     <string name="status_ikan">"Status Ikan: "</string>
+
+    <string name="desc_balashark">Balashark adalah ikan hias yang populer dalam akuarium. Berasal dari keluarga Cyprinidae, ikan ini memiliki tubuh yang lincah dan warna yang cerah. Balashark suka hidup dalam kelompok dan membutuhkan ruang yang cukup untuk berenang. SEGERA LEPASKAN IKAN KE HABITATNYA LALU HUBUNGI PIHAK BERWAJIB!</string>
+
+    <string name="desc_belida">Ikan Belida (Notopterus chitala) adalah ikan air tawar asli Indonesia yang termasuk dalam keluarga Notopteridae. Dikenal dengan bentuk tubuhnya yang memanjang dan pipih, ikan ini merupakan salah satu ikan endemik yang dilindungi karena populasinya yang semakin menurun. SEGERA LEPASKAN IKAN KE HABITATNYA LALU HUBUNGI PIHAK BERWAJIB!</string>
+
+    <string name="desc_lain">Ikan yang diidentifikasi belum termasuk dalam kategori ikan spesifik yang kami kenali. Setiap ikan memiliki keunikan tersendiri dalam ekosistem perairan.</string>
+
+    <string name="desc_pari_gergaji">Ikan Pari Gergaji (Pristis pristis) adalah salah satu spesies pari yang terancam punah. Memiliki karakteristik unik berupa "gergaji" di depan kepalanya, ikan ini merupakan predator penting dalam ekosistem laut dan termasuk dalam kategori ikan yang dilindungi. SEGERA LEPASKAN IKAN KE HABITATNYA LALU HUBUNGI PIHAK BERWAJIB!</string>
+
+    <string name="desc_pari_sungai">Ikan Pari Sungai adalah spesies pari yang hidup di perairan tawar atau muara. Memiliki kemampuan adaptasi yang baik, ikan ini berperan penting dalam menjaga keseimbangan ekosistem sungai. SEGERA LEPASKAN IKAN KE HABITATNYA LALU HUBUNGI PIHAK BERWAJIB!</string>
+
+    <string name="desc_raja_laut">Ikan Raja Laut (Mola mola) atau Ikan Mola adalah salah satu ikan terbesar di dunia. Berbentuk unik dengan tubuh yang pipih, ikan ini hidup di perairan laut dalam dan merupakan salah satu spesies yang menarik perhatian para peneliti kelautan. SEGERA LEPASKAN IKAN KE HABITATNYA LALU HUBUNGI PIHAK BERWAJIB!</string>
+    <string name="ambil_foto">Ambil Foto</string>
 </resources>

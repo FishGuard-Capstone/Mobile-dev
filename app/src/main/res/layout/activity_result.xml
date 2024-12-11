@@ -67,13 +67,13 @@
                     android:layout_marginBottom="8dp"/>
 
                 <TextView
-                    android:id="@+id/result_confidence"
+                    android:id="@+id/result_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tingkat_kepercayaan_0"
-                    android:textSize="16sp"
-                    android:textColor="#666666"
-                    android:fontFamily="sans-serif-medium"/>
+                    android:textSize="14sp"
+                    android:textColor="#424242"
+                    android:fontFamily="sans-serif"
+                    tools:text="Deskripsi ikan"/>
 
             </LinearLayout>
 

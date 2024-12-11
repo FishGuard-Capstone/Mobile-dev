@@ -29,11 +29,11 @@ class ImageClassifierHelper(
 
     private val labels = listOf(
         "Ikan Balashark",
-        "Ikan Raja Laut",
         "Ikan Belida",
-        "Ikan Pari Sungai",
+        "Ikan Lain",
         "Ikan Pari Gergaji",
-        "Ikan Lain"
+        "Ikan Pari Sungai",
+        "Ikan Raja Laut"
     )
 
     // Threshold confidence untuk menentukan apakah gambar termasuk ikan dilindungi
