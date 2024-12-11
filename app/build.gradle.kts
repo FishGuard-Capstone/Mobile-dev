@@ -84,6 +84,7 @@ dependencies {
     // Room Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.espresso.core)
     ksp(libs.androidx.room.compiler)
 
     // Lifecycle components
@@ -104,4 +105,12 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore)
+
+    implementation(libs.androidx.swiperefreshlayout)
+
+    implementation(libs.hilt.android)
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 }
