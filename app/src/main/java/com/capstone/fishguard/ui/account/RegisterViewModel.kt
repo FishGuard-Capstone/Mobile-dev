@@ -15,20 +15,45 @@ class RegisterViewModel @Inject constructor(
     private val repository: MyRepository
 ) : ViewModel() {
 
-    private val _registerResult = MutableStateFlow<RegisterResponse?>(null)
-    val registerResult: StateFlow<RegisterResponse?> = _registerResult
+    // Sealed class untuk mengelola state registrasi
+    sealed class RegisterState {
+        object Idle : RegisterState()
+        object Loading : RegisterState()
+        data class Success(val response: RegisterResponse) : RegisterState()
+        data class Error(val message: String) : RegisterState()
+    }
+
+    private val _registerState = MutableStateFlow<RegisterState>(RegisterState.Idle)
+    val registerState: StateFlow<RegisterState> = _registerState
 
     fun register(email: String, password: String) {
         viewModelScope.launch {
+            // Set state menjadi loading sebelum memulai registrasi
+            _registerState.value = RegisterState.Loading
+
             try {
-                val response = repository.register(email, password)
-                _registerResult.value = response
+                // Gunakan Result dari repository
+                val result = repository.register(email, password)
+
+                result.onSuccess { response ->
+                    // Registrasi berhasil
+                    _registerState.value = RegisterState.Success(response)
+                }.onFailure { exception ->
+                    // Registrasi gagal
+                    val errorMessage = when {
+                        exception.message?.contains("Email sudah digunakan", true) == true ->
+                            "Email sudah terdaftar. Gunakan email lain."
+                        exception.message?.contains("Registrasi gagal", true) == true ->
+                            "Registrasi gagal. Silakan coba lagi."
+                        else ->
+                            exception.message ?: "Registrasi gagal. Silakan coba lagi."
+                    }
+                    _registerState.value = RegisterState.Error(errorMessage)
+                }
             } catch (e: Exception) {
-                // Mengembalikan RegisterResponse dengan error yang sesuai
-                _registerResult.value = RegisterResponse(
-                    message = e.localizedMessage ?: "Registration failed",
-                    token = "",
-                    error = true
+                // Tangani kesalahan yang tidak terduga
+                _registerState.value = RegisterState.Error(
+                    e.localizedMessage ?: "Terjadi kesalahan. Silakan coba lagi."
                 )
             }
         }

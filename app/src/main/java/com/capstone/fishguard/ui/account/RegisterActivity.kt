@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.capstone.fishguard.MainActivity
@@ -32,6 +34,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var passwordInput: TextInputEditText
     private lateinit var registerButton: MaterialButton
     private lateinit var loginLink: TextView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +44,7 @@ class RegisterActivity : AppCompatActivity() {
         initializeViews()
         setupInputValidation()
         setupClickListeners()
-        observeRegisterResult()
+        observeRegisterState()
     }
 
     private fun initializeViews() {
@@ -53,6 +56,7 @@ class RegisterActivity : AppCompatActivity() {
         passwordInput = findViewById(R.id.passwordInput)
         registerButton = findViewById(R.id.registerButton)
         loginLink = findViewById(R.id.loginLink)
+        progressBar = findViewById(R.id.progressBar) // Pastikan Anda menambahkan ProgressBar di layout
     }
 
     private fun setupInputValidation() {
@@ -144,34 +148,59 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun performRegistration() {
-
         val email = emailInput.text.toString().trim()
         val password = passwordInput.text.toString()
 
         registerViewModel.register(email, password)
     }
 
-    private fun observeRegisterResult() {
+    private fun observeRegisterState() {
         lifecycleScope.launch {
-            registerViewModel.registerResult.collect { result ->
-                result?.let {
-                    if (!it.error) {
-                        // Registration successful, navigate to login or directly log in
-                        Toast.makeText(this@RegisterActivity, it.message, Toast.LENGTH_SHORT).show()
-
-                        // Option 1: Navigate to LoginActivity
-                        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
-
-                        // Option 2: Automatically login and go to MainActivity
-                        // startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
-
-                        finish()
-                    } else {
-                        // Registration failed
-                        Toast.makeText(this@RegisterActivity, it.message, Toast.LENGTH_SHORT).show()
+            registerViewModel.registerState.collect { state ->
+                when (state) {
+                    is RegisterViewModel.RegisterState.Idle -> {
+                        progressBar.visibility = View.GONE
+                        registerButton.isEnabled = true
+                    }
+                    is RegisterViewModel.RegisterState.Loading -> {
+                        progressBar.visibility = View.VISIBLE
+                        registerButton.isEnabled = false
+                    }
+                    is RegisterViewModel.RegisterState.Success -> {
+                        progressBar.visibility = View.GONE
+                        registerButton.isEnabled = true
+                        showSuccessDialog(state.response.message)
+                    }
+                    is RegisterViewModel.RegisterState.Error -> {
+                        progressBar.visibility = View.GONE
+                        registerButton.isEnabled = true
+                        showErrorDialog(state.message)
                     }
                 }
             }
         }
+    }
+
+    private fun showSuccessDialog(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Registrasi Berhasil")
+            .setMessage(message)
+            .setPositiveButton("Login") { _, _ ->
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+            .create()
+            .show()
+    }
+
+    private fun showErrorDialog(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Registrasi Gagal")
+            .setMessage(message)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }

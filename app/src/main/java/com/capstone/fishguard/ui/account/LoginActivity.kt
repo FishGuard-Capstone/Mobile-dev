@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
+import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.capstone.fishguard.MainActivity
@@ -31,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: MaterialButton
     private lateinit var registerLink: TextView
     private lateinit var googleLoginImage: ImageView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
         initializeViews()
         setupInputValidation()
         setupClickListeners()
-        observeLoginResult()
+        observeLoginState()
     }
 
     private fun initializeViews() {
@@ -51,6 +55,7 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
         registerLink = findViewById(R.id.registerLink)
         googleLoginImage = findViewById(R.id.googleLoginImage)
+        progressBar = findViewById(R.id.progressBar) // Pastikan Anda menambahkan ProgressBar di layout
     }
 
     private fun setupInputValidation() {
@@ -124,25 +129,47 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun performLogin() {
-        val email = emailInput.text.toString()
+        val email = emailInput.text.toString().trim()
         val password = passwordInput.text.toString()
         loginViewModel.login(email, password)
     }
 
-    private fun observeLoginResult() {
+    private fun observeLoginState() {
         lifecycleScope.launch {
-            loginViewModel.loginResult.collect { result ->
-                result?.let {
-                    if (!it.error) {
-                        // Successful login
+            loginViewModel.loginState.collect { state ->
+                when (state) {
+                    is LoginViewModel.LoginState.Idle -> {
+                        progressBar.visibility = View.GONE
+                        loginButton.isEnabled = true
+                    }
+                    is LoginViewModel.LoginState.Loading -> {
+                        progressBar.visibility = View.VISIBLE
+                        loginButton.isEnabled = false
+                    }
+                    is LoginViewModel.LoginState.Success -> {
+                        progressBar.visibility = View.GONE
+                        loginButton.isEnabled = true
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
-                    } else {
-                        // Login failed
-                        Toast.makeText(this@LoginActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is LoginViewModel.LoginState.Error -> {
+                        progressBar.visibility = View.GONE
+                        loginButton.isEnabled = true
+                        showErrorDialog(state.message)
                     }
                 }
             }
         }
+    }
+
+    private fun showErrorDialog(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Login Gagal")
+            .setMessage(message)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }
