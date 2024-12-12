@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.capstone.fishguard.data.remote.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -21,12 +22,15 @@ class MyRepository @Inject constructor(
         private val USER_ID_KEY = stringPreferencesKey("user_id")
     }
 
-    suspend fun register(name: String, email: String, password: String): RegisterResponse {
-        return apiService.register(name, email, password)
+    // Menggunakan RegisterRequest yang berisi email dan password
+    suspend fun register(email: String, password: String): RegisterResponse {
+        // Membuat objek RegisterRequest untuk dikirimkan
+        val request = RegisterRequest(email, password)
+        return apiService.register(request) // Mengirim objek request
     }
 
     suspend fun login(email: String, password: String): LoginResponse {
-        val response = apiService.login(email, password)
+        val response = apiService.login(RegisterRequest(email, password)) // Menggunakan RegisterRequest
         if (!response.error) saveUserData(response.loginResult.token, response.loginResult.userId)
         return response
     }

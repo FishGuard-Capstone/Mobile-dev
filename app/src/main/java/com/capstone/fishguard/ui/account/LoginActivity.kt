@@ -5,17 +5,24 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.capstone.fishguard.MainActivity
 import com.capstone.fishguard.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
+
+    private val loginViewModel: LoginViewModel by viewModels()
 
     private lateinit var emailInputLayout: TextInputLayout
     private lateinit var passwordInputLayout: TextInputLayout
@@ -33,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
         initializeViews()
         setupInputValidation()
         setupClickListeners()
+        observeLoginResult()
     }
 
     private fun initializeViews() {
@@ -111,18 +119,30 @@ class LoginActivity : AppCompatActivity() {
         }
 
         googleLoginImage.setOnClickListener {
-            // Implement Google Sign-In logic
-            // You can add Google Sign-In integration here
+            // Google Sign-In implementation will be added later
         }
     }
 
     private fun performLogin() {
         val email = emailInput.text.toString()
         val password = passwordInput.text.toString()
+        loginViewModel.login(email, password)
+    }
 
-        // Add your actual login authentication logic here
-        // For now, just navigating to MainActivity
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+    private fun observeLoginResult() {
+        lifecycleScope.launch {
+            loginViewModel.loginResult.collect { result ->
+                result?.let {
+                    if (!it.error) {
+                        // Successful login
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        finish()
+                    } else {
+                        // Login failed
+                        Toast.makeText(this@LoginActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 }

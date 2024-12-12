@@ -6,14 +6,23 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.capstone.fishguard.MainActivity
 import com.capstone.fishguard.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
+
+    private val registerViewModel: RegisterViewModel by viewModels()
 
     private lateinit var nameInputLayout: TextInputLayout
     private lateinit var emailInputLayout: TextInputLayout
@@ -32,6 +41,7 @@ class RegisterActivity : AppCompatActivity() {
         initializeViews()
         setupInputValidation()
         setupClickListeners()
+        observeRegisterResult()
     }
 
     private fun initializeViews() {
@@ -129,17 +139,39 @@ class RegisterActivity : AppCompatActivity() {
 
         loginLink.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 
     private fun performRegistration() {
-        val name = nameInput.text.toString().trim()
+
         val email = emailInput.text.toString().trim()
         val password = passwordInput.text.toString()
 
-        // Add your actual registration logic here
-        // For now, just navigate to LoginActivity
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
+        registerViewModel.register(email, password)
+    }
+
+    private fun observeRegisterResult() {
+        lifecycleScope.launch {
+            registerViewModel.registerResult.collect { result ->
+                result?.let {
+                    if (!it.error) {
+                        // Registration successful, navigate to login or directly log in
+                        Toast.makeText(this@RegisterActivity, it.message, Toast.LENGTH_SHORT).show()
+
+                        // Option 1: Navigate to LoginActivity
+                        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+
+                        // Option 2: Automatically login and go to MainActivity
+                        // startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
+
+                        finish()
+                    } else {
+                        // Registration failed
+                        Toast.makeText(this@RegisterActivity, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 }

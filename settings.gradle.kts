@@ -1,27 +1,31 @@
 pluginManagement {
     repositories {
-        google() {
+        google {
             content {
                 includeGroupByRegex("com\\.android.*")
                 includeGroupByRegex("com\\.google.*")
                 includeGroupByRegex("androidx.*")
             }
         }
-        mavenCentral()  // Repositori Maven Central
-        gradlePluginPortal()  // Gradle Plugin Portal
-        maven { url = uri("https://jitpack.io") }  // Repositori JitPack
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url = uri("https://jitpack.io") }
+    }
+    plugins {
+        id("com.google.devtools.ksp") version "2.1.0-1.0.29"
+        id("com.google.dagger.hilt.android") version "2.51.1"
     }
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)  // Menyaring repositori projek
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()  // Repositori Google
-        mavenCentral()  // Repositori Maven Central
-        gradlePluginPortal()  // Gradle Plugin Portal
-        maven { url = uri("https://jitpack.io") }  // Repositori JitPack
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
-rootProject.name = "FishGuard"  // Nama root proyek
-include(":app")  // Menyertakan modul :app
+rootProject.name = "FishGuard"
+include(":app")

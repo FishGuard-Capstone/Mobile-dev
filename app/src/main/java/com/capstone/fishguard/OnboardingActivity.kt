@@ -1,3 +1,4 @@
+// OnboardingActivity.kt
 package com.capstone.fishguard
 
 import android.content.Intent
@@ -84,9 +85,9 @@ class OnboardingActivity : AppCompatActivity() {
 
     // Fungsi untuk menavigasi ke halaman login setelah onboarding selesai
     private fun navigateToLogin() {
-        // Membuat intent untuk berpindah ke LoginActivity
         val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
-        finish()  // Menutup OnboardingActivity agar tidak bisa kembali
+        finish()
     }
 }

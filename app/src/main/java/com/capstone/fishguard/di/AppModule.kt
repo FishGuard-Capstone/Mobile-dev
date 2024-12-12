@@ -17,6 +17,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -43,7 +44,7 @@ object AppModule {
                 }.first() ?: ""
             }
             val newRequest = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer $token")
+                .addHeader("Authorization", "Bearer $token") // Format token
                 .build()
             chain.proceed(newRequest)
         }
@@ -58,6 +59,26 @@ object AppModule {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(authInterceptor)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor { chain ->
+                try {
+                    val response = chain.proceed(chain.request())
+
+                    if (!response.isSuccessful) {
+                        val errorBody = response.body?.string()
+                        android.util.Log.e(
+                            "NetworkError",
+                            "Status Code: ${response.code}, Error Body: $errorBody"
+                        )
+                    }
+                    response
+                } catch (e: Exception) {
+                    android.util.Log.e("NetworkError", "Network Error: ${e.message}")
+                    throw e
+                }
+            }
             .build()
     }
 
@@ -65,7 +86,7 @@ object AppModule {
     @Singleton
     fun provideApiService(okHttpClient: OkHttpClient): ApiService {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl("http://capstone-fish-guard.et.r.appspot.com/") // Sesuaikan dengan API
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

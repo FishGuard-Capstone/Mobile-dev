@@ -93,4 +93,25 @@
 
     <string name="desc_raja_laut">Ikan Raja Laut (Mola mola) atau Ikan Mola adalah salah satu ikan terbesar di dunia. Berbentuk unik dengan tubuh yang pipih, ikan ini hidup di perairan laut dalam dan merupakan salah satu spesies yang menarik perhatian para peneliti kelautan. SEGERA LEPASKAN IKAN KE HABITATNYA LALU HUBUNGI PIHAK BERWAJIB!</string>
     <string name="ambil_foto">Ambil Foto</string>
+    <string name="ok">Oke</string>
+
+    <string name="success">Sukses</string>
+    <string name="login_success">Login berhasil!</string>
+    <string name="dont_have_an_account_sign_up">Belum punya akun? Daftar sekarang</string>
+    <string name="unknown_error">Terjadi kesalahan yang tidak terduga.</string>
+    <string name="error">Galat</string>
+    <string name="gambar_cerita">Ilustrasi cerita</string>
+
+    <string name="logout_success">Berhasil keluar.</string>
+    <string name="logout_title">Keluar</string>
+    <string name="logout_message">Apakah Anda yakin ingin keluar?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+
+    <string name="registration_success_title">Pendaftaran Berhasil</string>
+    <string name="registration_success_message">Anda sekarang dapat masuk</string>
+    <string name="registration_error_title">Kesalahan</string>
+    <string name="invalidinput">Input tidak valid, periksa kembali data Anda</string>
+    <string name="registration_failed_message">Pendaftaran Gagal</string>
+    <string name="invalid_input">Email atau kata sandi salah</string>
 </resources>
