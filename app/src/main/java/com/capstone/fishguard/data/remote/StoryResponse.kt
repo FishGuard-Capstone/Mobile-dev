@@ -17,7 +17,8 @@ data class GetAllStoriesResponse(
     val stories: List<Story> = emptyList(),
     val currentPage: Int = 1,
     val totalPages: Int = 1,
-    val totalStories: Int = 0
+    val totalStories: Int = 0,
+    val listStory: List<Story>
 )
 
 // Response untuk menyukai cerita
@@ -42,6 +43,7 @@ data class Story(
     val createdAt: String = "",
     val location: Location? = null,
     val likes: Int = 0,
+    val description: String,
     val comments: List<Comment> = emptyList()
 ) : Parcelable
 

@@ -86,6 +86,7 @@ class IdentifikasiIkanActivity : AppCompatActivity(), ImageClassifierHelper.Clas
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         viewBinding = ActivityIdentifikasiIkanBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 

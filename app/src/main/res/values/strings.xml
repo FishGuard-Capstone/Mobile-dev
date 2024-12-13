@@ -114,4 +114,9 @@
     <string name="invalidinput">Input tidak valid, periksa kembali data Anda</string>
     <string name="registration_failed_message">Pendaftaran Gagal</string>
     <string name="invalid_input">Email atau kata sandi salah</string>
+    <string name="deskripsi_cerita">Deskripsi</string>
+    <string name="tambah_cerita">tambah cerita</string>
+    <string name="camera">Kamera</string>
+    <string name="upload">Unggah</string>
+    <string name="logout">keluar</string>
 </resources>

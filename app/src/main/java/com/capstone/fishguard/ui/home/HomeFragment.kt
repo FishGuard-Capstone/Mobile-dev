@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.capstone.fishguard.databinding.FragmentHomeBinding
 import com.capstone.fishguard.ui.identifikasi.IdentifikasiIkanActivity
 import com.capstone.fishguard.ui.newsapi.BeritaKelautanActivity
-import com.capstone.fishguard.ui.komunitas.KomunitasPerikananActivity
+import com.capstone.fishguard.ui.komunitas.KomunitasActivity
 
 class HomeFragment : Fragment() {
 
@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.cardKomunitasPerikanan.setOnClickListener {
-            val intent = Intent(requireContext(), KomunitasPerikananActivity::class.java)
+            val intent = Intent(requireContext(), KomunitasActivity::class.java)
             startActivity(intent)
         }
 

@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/profile_ic"
         android:title="@string/title_profile" />
 
 </menu>

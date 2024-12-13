@@ -29,7 +29,7 @@
             android:name=".ui.identifikasi.HistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.komunitas.KomunitasPerikananActivity"
+            android:name=".ui.komunitas.KomunitasActivity"
             android:exported="false" />
         <activity
             android:name=".ui.identifikasi.IdentifikasiIkanActivity"
