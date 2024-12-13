@@ -163,13 +163,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showErrorDialog(message: String) {
-        AlertDialog.Builder(this)
-            .setTitle("Login Gagal")
-            .setMessage(message)
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .create()
-            .show()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show() // Tampilkan Toast dengan pesan error
     }
 }

@@ -15,6 +15,7 @@ import com.capstone.fishguard.adapter.StoryAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class ListStoryFragment : Fragment() {
 

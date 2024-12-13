@@ -3,6 +3,7 @@ package com.capstone.fishguard
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,10 +14,7 @@ import com.google.android.material.tabs.TabLayout
 class OnboardingActivity : AppCompatActivity() {
     private var pageIndex = 0
 
-    // Data gambar
     private val images = arrayOf(R.drawable.onboard_1, R.drawable.onboard_2, R.drawable.onboard_3)
-
-    // Data teks
     private lateinit var titles: Array<String>
     private lateinit var subtitles: Array<String>
 
@@ -24,7 +22,6 @@ class OnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
-        // Inisialisasi teks
         titles = arrayOf(
             getString(R.string.onboarding_title_1),
             getString(R.string.onboarding_title_2),
@@ -42,27 +39,22 @@ class OnboardingActivity : AppCompatActivity() {
         val button: Button = findViewById(R.id.actionButton)
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
 
-        // Menambahkan tab untuk setiap halaman onboarding
         repeat(titles.size) {
             tabLayout.addTab(tabLayout.newTab())
         }
 
-        // Memperbarui konten tampilan onboarding
         updateContent(imageView, titleView, subtitleView, button, tabLayout)
 
         button.setOnClickListener {
             pageIndex++
             if (pageIndex < titles.size) {
-                // Jika halaman masih ada, perbarui tampilan untuk halaman selanjutnya
                 updateContent(imageView, titleView, subtitleView, button, tabLayout)
             } else {
-                // Jika sudah di halaman terakhir, navigasikan ke halaman login
                 navigateToLogin()
             }
         }
     }
 
-    // Fungsi untuk memperbarui konten tampilan berdasarkan halaman yang aktif
     private fun updateContent(
         imageView: ImageView,
         titleView: TextView,
@@ -70,20 +62,20 @@ class OnboardingActivity : AppCompatActivity() {
         button: Button,
         tabLayout: TabLayout
     ) {
+        val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         imageView.setImageResource(images[pageIndex])
+        imageView.startAnimation(fadeIn)
+
         titleView.text = titles[pageIndex]
         subtitleView.text = subtitles[pageIndex]
 
-        button.text = when (pageIndex) {
-            0 -> getString(R.string.start) // Tombol di halaman pertama
-            else -> getString(R.string.next) // Tombol di halaman selain pertama
-        }
+        titleView.startAnimation(fadeIn)
+        subtitleView.startAnimation(fadeIn)
 
-        // Memilih tab yang sesuai dengan halaman yang aktif
+        button.text = if (pageIndex == titles.lastIndex) getString(R.string.start) else getString(R.string.next)
         tabLayout.selectTab(tabLayout.getTabAt(pageIndex))
     }
 
-    // Fungsi untuk menavigasi ke halaman login setelah onboarding selesai
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
