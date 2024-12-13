@@ -54,7 +54,7 @@ class DetailStoryFragment : Fragment() {
     private fun displayStoryDetails() {
         val storyDetails = arguments.story
 
-        loadImage(storyDetails.imageUrl)
+        loadImage(storyDetails.photoUrl)
         setSharedElementTransitionNames(storyDetails.id)
         bindStoryContent(storyDetails.username, storyDetails.description)
     }

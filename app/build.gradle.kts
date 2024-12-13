@@ -118,6 +118,9 @@ dependencies {
     implementation (libs.androidx.navigation.fragment.ktx.v273)
     implementation (libs.androidx.navigation.ui.ktx.v273)
 
+    implementation (libs.material.v190)
+
+
 }
 
 kapt {

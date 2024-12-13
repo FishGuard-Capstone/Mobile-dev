@@ -43,7 +43,7 @@ class StoryAdapter(
                 itemDescription.text = story.description
 
                 Glide.with(itemView.context)
-                    .load(story.imageUrl)
+                    .load(story.photoUrl)
                     .placeholder(R.drawable.ic_place_holder)
                     .error(R.drawable.ic_error_image)
                     .into(itemPhoto)

@@ -33,7 +33,7 @@ class ListStoryViewModel @Inject constructor(
             try {
                 val result = storyRepository.getStories()
                 if (!result.error) {
-                    _stories.value = result.listStory
+                    _stories.value = result.stories  // Ubah dari result.listStory ke result.stories
                 } else {
                     _errorState.value = result.message
                 }

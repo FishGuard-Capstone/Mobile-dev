@@ -2,6 +2,7 @@ package com.capstone.fishguard.data.remote
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.sql.Timestamp
 
 // Response untuk menambahkan cerita
 data class AddStoryResponse(
@@ -17,8 +18,7 @@ data class GetAllStoriesResponse(
     val stories: List<Story> = emptyList(),
     val currentPage: Int = 1,
     val totalPages: Int = 1,
-    val totalStories: Int = 0,
-    val listStory: List<Story>
+    val totalStories: Int = 0
 )
 
 // Response untuk menyukai cerita
@@ -39,11 +39,11 @@ data class Story(
     val id: String = "",
     val username: String = "",
     val caption: String = "",
-    val imageUrl: String = "",
-    val createdAt: String = "",
+    val photoUrl: String = "",
+    val createdAt: Timestamp?,
     val location: Location? = null,
     val likes: Int = 0,
-    val description: String,
+    val description: String = "",
     val comments: List<Comment> = emptyList()
 ) : Parcelable
 
@@ -60,5 +60,5 @@ data class Comment(
     val userId: String = "",
     val username: String = "",
     val text: String = "",
-    val createdAt: String = ""
+    val createdAt: Timestamp?
 ) : Parcelable
