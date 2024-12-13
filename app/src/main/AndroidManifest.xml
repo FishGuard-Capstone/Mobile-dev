@@ -30,6 +30,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.komunitas.KomunitasActivity"
+            android:theme="@style/Theme.FishGuard.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".ui.identifikasi.IdentifikasiIkanActivity"

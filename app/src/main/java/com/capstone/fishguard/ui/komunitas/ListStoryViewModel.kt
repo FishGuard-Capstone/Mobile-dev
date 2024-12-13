@@ -15,16 +15,19 @@ class ListStoryViewModel @Inject constructor(
     private val storyRepository: MyRepository
 ) : ViewModel() {
 
-    private val _stories = MutableLiveData<List<Story>>()
+    private val _stories = MutableLiveData<List<Story>>(emptyList())
     val stories: LiveData<List<Story>> = _stories
 
-    private val _loadingState = MutableLiveData<Boolean>()
+    private val _loadingState = MutableLiveData(false)
     val loadingState: LiveData<Boolean> = _loadingState
 
-    private val _errorState = MutableLiveData<String?>()
+    private val _errorState = MutableLiveData<String?>(null)
     val errorState: LiveData<String?> = _errorState
 
     fun loadStories() {
+        // Prevent multiple simultaneous loading
+        if (_loadingState.value == true) return
+
         _loadingState.value = true
         viewModelScope.launch {
             try {

@@ -37,8 +37,11 @@ class ListStoryFragment : Fragment() {
         initializeRecyclerView()
         setupRefreshListener()
         observeViewModelData()
-        storyViewModel.loadStories()
         setupFabAction()
+
+        if (storyViewModel.stories.value.isNullOrEmpty()) {
+            storyViewModel.loadStories()
+        }
     }
 
     private fun initializeRecyclerView() {
@@ -74,6 +77,7 @@ class ListStoryFragment : Fragment() {
         storyViewModel.stories.observe(viewLifecycleOwner) { storyList ->
             adapter.submitList(storyList)
             binding.swipeRefreshLayout.isRefreshing = false
+            binding.emptyStateView.visibility = if (storyList.isNullOrEmpty()) View.VISIBLE else View.GONE
         }
 
         storyViewModel.loadingState.observe(viewLifecycleOwner) { isLoading ->
